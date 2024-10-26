@@ -1,0 +1,30 @@
+body{
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    background-color: #f4f4f9;
+}
+
+.profile-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+    margin: 20px;
+}
+.profile-card h2 {
+    margin: 0 0 10px;
+}
+.profile-card p, .profile-card li {
+    margin: 5px 0;
+    color: #555;
+}
+.profile-card .section-title {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+}
