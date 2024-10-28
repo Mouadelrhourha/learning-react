@@ -1,8 +1,14 @@
 import "./ProfilePage.css";
 import {Footer} from "../components/Footer/Footer";
 import {Header} from "../components/Header/Header";
+import {useEffect} from "react";
 
 export const ProfilePage = () => {
+
+    useEffect(() => {
+        console.log("ProfilePage mounted");
+    }, []);
+
     const hobies = ["Reading", "Swimming", "Running", "Cycling"];
     return (
         <>

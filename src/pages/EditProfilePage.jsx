@@ -1,12 +1,15 @@
 import "./EditProfilePage.css";
 import {Footer} from "../components/Footer/Footer";
 import {Header} from "../components/Header/Header";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import userEvent from "@testing-library/user-event";
 import { eventWrapper } from "@testing-library/user-event/dist/utils";
 
 export const EditProfilePage = () => {
-    console.log("EditProfilePage s'affiche");
+    /**
+     * hadi hia componentDidUpdate
+     */
+    console.log("EditProfilePage mettre à jour");
     /**
      * useState c'est un hook, un hook wahd l fonction kat3tihalk react kadir chi haja
      * f had lhala useState kat3tihalk variable w valeur par defaut
@@ -21,11 +24,49 @@ export const EditProfilePage = () => {
     const [checkedPhoneState , setCheckedPhone]=useState(false);
     const [checkedSmsState , setCheckedSms]=useState(false);
     const [submitState , setSubmit]=useState(false);
-        
-    const shouldDisplayComMessage =(checkedEmailState && checkedPhoneState && checkedSmsState); 
+    const [elapsedTime, setElapsedTime] = useState(0);
 
- 
+    const shouldDisplayComMessage =(checkedEmailState && checkedPhoneState && checkedSmsState);
 
+
+    /**
+     * mor 10 seconds ydir console.log ila kan firstname mouad
+     */
+    useEffect(() => {
+        setTimeout(()=> {
+            if(firstnameState === "mouad"){
+                console.log("Vous n'avez changé");
+            }
+        },1000 * 10)
+    },[])
+
+    useEffect(() => {
+        setInterval(() => {
+            setElapsedTime(elapsedTime => elapsedTime + 1);
+        },1000)
+        /**
+         useEffect tatgolk ila drtili fonction f return radi n executeha mni l component maradich
+         /yb9a monté ==> mni l component ygheyerha
+         HADI hia componentDidMount à condition que tableau ykon vide
+         **/
+        console.log("EditProfilePage mounted");
+
+        /**
+         * hadi hia componentWillUnmount, ye3ni mni l component ymchi mn dom radi n executewha
+         */
+        return () => {
+            console.log("EditProfilePage unmounted, goodbye !");
+            console.log("Vous avez passé " + elapsedTime + " secondes dans le composant");
+        }
+    }, []);
+
+
+    /**
+     * hadi kat executa chaque fois que la variable firstnameState ou lastnameState change
+     */
+    useEffect(() => {
+        console.log("Vous avez changé le prénom ou le nom");
+    }, [firstnameState,lastnameState]);
 
     /**
      * si la variable n'est state, react ne va pas re-render (actualiser) le composant
@@ -81,17 +122,15 @@ export const EditProfilePage = () => {
     const oncheckedSmschange=(event)=>{
             setCheckedSms(event.target.checked)
             }
-            
-    const onSubmitchange = (event)=>{     
-        event.preventDefault();   
+
+    const onSubmitchange = (event)=>{
+        event.preventDefault();
         setSubmit(true)
         console.log("soumis");
-        
-        
     }
 
 
-    
+
 
    return (
         <>
@@ -100,6 +139,9 @@ export const EditProfilePage = () => {
             <form className="edit-form" onSubmit={onSubmitchange}>
                 <h2>Edit Customer Profile</h2>
 
+                <h5>
+                    Temps passé dans le composant: {elapsedTime} secondes
+                </h5>
                 <label htmlFor="first-name">First Name</label>
                 <p>Le nom saisie c'est: {firstnameState}</p>
                 <input type="text" id="first-name" name="first-name" value={firstnameState} onChange={onFirstnameChange} />
@@ -134,11 +176,11 @@ export const EditProfilePage = () => {
                 <div className="checkbox-group">
                     <input type="checkbox" id="sms-pref" name="communication" checked={checkedSmsState} onChange={oncheckedSmschange} />
                     <label htmlFor="sms-pref">SMS</label>
-                    
+
                 </div>
                 <p> {shouldDisplayComMessage?"nous allons communiquer avec vous via toutes les méthodes":null} </p>
 
-                
+
 
                 <button type="submit" >Save Changes</button>
                 {submitState && (
@@ -156,7 +198,7 @@ export const EditProfilePage = () => {
                     </div>
                     )}
 
-                
+
             </form>
             <Footer/>
         </>
