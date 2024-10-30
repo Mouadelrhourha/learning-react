@@ -29,7 +29,7 @@ export const TodosPage = () => {
                     <ul>
                         {todos.map((todo, index) => (
                             <li key={index}>
-                                {todo.id} - {todo.userId} - {todo.title} - {todo.completed.toString()}
+                                {todo.id} - {todo.userId} - {todo.title} - {<input type="checkbox" checked={todo.completed} />}
                             </li>
                         ))
                         }
